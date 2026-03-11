@@ -69,12 +69,6 @@ The central coordinator that integrates all modules:
 3. **Distribution Layer**: Completely separate from treasury execution, operates on different token allocations
 4. **Attack Prevention**: Runs parallel checks without blocking legitimate transactions
 
-### Data Flow
-
-```
-User Action → Signature Verification → Proposal Created
-    → Approval Collection → Queue → Timelock Delay → Execution
-```
 
 Each transition is atomic and independently verifiable.
 
