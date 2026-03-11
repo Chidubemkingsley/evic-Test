@@ -104,5 +104,3 @@ Monolithic contracts create conditions where a single vulnerability destroys eve
 **Trust assumption:** Module boundaries are trusted to hold. The design assumes inter-module calls behave as expected — if a module is upgraded to a malicious implementation, the isolation guarantee breaks down. Users must trust the upgrade governance process.
 
 ---
-
-The throughline across all three is that **the on-chain logic is only as trustworthy as the off-chain actors and tooling supporting it** — key holders, root generators, wallet UIs, and upgrade proposers all sit outside the trust boundary the code can enforce.
