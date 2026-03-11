@@ -70,7 +70,7 @@ The central coordinator that integrates all modules:
 4. **Attack Prevention**: Runs parallel checks without blocking legitimate transactions
 
 
-Each transition is atomic and independently verifiable.
+
 
 Here's the reorganized content grouped under **Trust Assumptions**:
 
