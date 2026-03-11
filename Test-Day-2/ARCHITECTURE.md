@@ -78,22 +78,31 @@ User Action → Signature Verification → Proposal Created
 
 Each transition is atomic and independently verifiable.
 
+Here's the reorganized content grouped under **Trust Assumptions**:
+
+---
+
 ## Trust Assumptions
 
-### Why EIP-712?
+### EIP-712 for Signature Security
+EIP-712 provides domain-separated signatures that prevent cross-protocol replay (different domain hash), cross-chain replay (chain ID in domain).
 
-EIP-712 provides domain-separated signatures that prevent:
-- Cross-protocol replay (different domain hash)
-- Cross-chain replay (chain ID in domain)
-- Signature malleability (strict DER encoding required)
+**Trust assumption:** Signers are trusted to verify the domain they're signing for. The protocol assumes wallets correctly display EIP-712 structured data to users — if a wallet silently misrepresents the payload, the user could unknowingly sign a malicious message.
 
-### Why Merkle Proofs for Rewards?
+---
 
-Linear storage of claims would cost O(n) gas per claim. Merkle proofs  enables thousands of recipients without demanding excessive gas costs.
+### Merkle Proofs for Reward Distribution
+Linear storage of claims would cost O(n) gas per claim. Merkle proofs enable thousands of recipients without excessive gas costs.
 
-### Why have Modular Design?
+**Trust assumption:** The Merkle root itself is trusted. The protocol assumes the off-chain root generation process is correct and that the governor who submits the root is not compromised. A malformed or malicious root cannot be detected on-chain.
 
-Monolithic contracts bring about conditions where a single vulnerability destroys everything. Modular design ensures:
-- Attack on one module doesn't directly access funds
-- Different security assumptions for different operations
-- Easier auditing and testing of individual components
+---
+
+### Modular Design for Isolation
+Monolithic contracts create conditions where a single vulnerability destroys everything. Modular design ensures an attack on one module doesn't directly access funds, allows different security assumptions per operation, and makes individual components easier to audit and test.
+
+**Trust assumption:** Module boundaries are trusted to hold. The design assumes inter-module calls behave as expected — if a module is upgraded to a malicious implementation, the isolation guarantee breaks down. Users must trust the upgrade governance process.
+
+---
+
+The throughline across all three is that **the on-chain logic is only as trustworthy as the off-chain actors and tooling supporting it** — key holders, root generators, wallet UIs, and upgrade proposers all sit outside the trust boundary the code can enforce.
